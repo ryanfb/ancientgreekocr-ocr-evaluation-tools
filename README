@@ -27,12 +27,15 @@ performance of and experimenting with OCR output.  See the user guide
 Building
 ========
 
-Each subdirectory contains the source for one program, a Unix man
-page, and a build script named "Build".  Most programs depend on
-a library that is build by Modules/Build.  To build the library
-and all of the programs, cd into each directory and run ./Build.
+To build the tools, run:
 
-A more featureful and flexible build procedure will hopefully come in
-the future.
+  make
 
+To install them, run:
+
+  make install
+
+To install them to a different directory, run:
+
+  make PREFIX=/my/install/directory install
 
