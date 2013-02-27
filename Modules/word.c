@@ -29,8 +29,17 @@
 static Boolean is_wordchar(value)
 Charvalue value;
 {
-    return(value >= 'a' && value <= 'z' ||
-    value >= 0xDF && value <= 0xFF && value != 0xF7 ? True : False);
+    char puncchars[] = " ,.:;!'\"()<>\n\t";
+    char *c;
+    if(!value) {
+        return False;
+    }
+    for(c = puncchars; *c; c++) {
+        if(value == *c) {
+            return False;
+        }
+    }
+    return True;
 }
 /**********************************************************************/
 
@@ -39,26 +48,33 @@ Wordlist *wordlist;
 Text *text;
 {
     unsigned char string[MAX_WORDLENGTH + 1];
-    long len = 0, i;
+    unsigned char s[7];
+    long len = 0, i, l;
     Charvalue value;
     Word *word;
     list_in_array(text);
+    string[0] = 0;
     for (i = 0; i < text->count || len > 0; i++)
     {
-	value = (i < text->count ? text->array[i]->value : 0);
-	if (is_wordchar(value))
-	{
-	    if (len < MAX_WORDLENGTH)
-		string[len++] = value;
-	}
-	else if (len > 0)
-	{
-	    word = NEW(Word);
-	    string[len] = '\0';
-	    word->string = (unsigned char *) strdup(string);
-	    list_insert_last(wordlist, word);
-	    len = 0;
-	}
+        value = (i < text->count ? text->array[i]->value : 0);
+        if (is_wordchar(value))
+        {
+            char_to_string(0, value, s, 0);
+            l = strlen(s);
+            if (len + l < MAX_WORDLENGTH) {
+                strncat(string, s, l);
+                len += l;
+            }
+        }
+        else if (len > 0)
+        {
+            word = NEW(Word);
+            string[len] = '\0';
+            word->string = (unsigned char *) strdup(string);
+            list_insert_last(wordlist, word);
+            len = 0;
+            string[0] = 0;
+        }
     }
 }
 /**********************************************************************/
