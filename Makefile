@@ -44,6 +44,8 @@ SRC = \
 	wordaccsum/wordaccsum.c \
 	wordfreq/wordfreq.c
 
+EXTRAS = ocrtoolutf8
+
 HDR = $(LIB:.o=.h)
 OBJ = $(SRC:.c=.o) $(LIB)
 BIN = $(SRC:.c=)
@@ -70,6 +72,8 @@ install: all
 	echo Installing binaries to $(DESTDIR)$(PREFIX)/bin
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	for f in $(BIN); do b=`basename "$$f"`; cp -f "$$f" "$(DESTDIR)$(PREFIX)/bin/$$b"; done
+	cp -f $(EXTRAS) "$(DESTDIR)$(PREFIX)/bin"
+	cd "$(DESTDIR)$(PREFIX)/bin" && chmod 755 $(EXTRAS)
 	echo Installing manual pages to $(DESTDIR)$(MANPREFIX)/man1
 	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
 	for f in $(MAN); do b=`basename "$$f"`; cp -f "$$f" "$(DESTDIR)$(MANPREFIX)/man1/$$b"; done

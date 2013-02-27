@@ -39,3 +39,16 @@ To install them to a different directory, run:
 
   make PREFIX=/my/install/directory install
 
+
+Running tests with UTF-8
+========================
+
+Run the tool inside the ocrtoolutf8 wrapper script, e.g.
+
+   ocrtoolutf8 accuracy correct.txt ocr.txt
+or
+   ocrtoolutf8 wordacc correct.txt ocr.txt
+
+This is needed as the tools don't (yet) natively handle UTF-8, but
+they can handle strangely encoded UTF-16, which this wrapper script
+delivers.

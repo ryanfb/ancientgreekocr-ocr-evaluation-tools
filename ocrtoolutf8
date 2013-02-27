@@ -1,0 +1,20 @@
+#!/bin/sh
+# Requires iconv, uni2asc and asc2uni (the latter two from the
+# isri-ocr-evaluation toolkit)
+
+usage="$0 toolname ground.txt ocr.txt"
+
+test $# -ne 3 && echo "$usage" && exit 1
+
+tool="$1"
+ground="$2"
+ocr="$3"
+
+t=`mktemp -d`
+
+iconv -f utf8 -t utf16 < "$ground" | uni2asc > "$t/ground"
+iconv -f utf8 -t utf16 < "$ocr" | uni2asc > "$t/ocr"
+
+"$1" "$t/ground" "$t/ocr" | asc2uni | iconv -f utf16 -t utf8
+
+rm -r "$t"
