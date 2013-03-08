@@ -44,7 +44,7 @@ SRC = \
 	wordaccsum/wordaccsum.c \
 	wordfreq/wordfreq.c
 
-EXTRAS = ocrtoolutf8
+EXTRAS = ocrevalutf8
 
 HDR = $(LIB:.o=.h)
 OBJ = $(SRC:.c=.o) $(LIB)
