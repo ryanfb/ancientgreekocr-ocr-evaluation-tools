@@ -36,7 +36,7 @@ n=0
 for i in `find "$imgdir" -type f -name '*.png' | sort`; do
 	b=`basename "$i" .png`
 	printf "%s: " "$b"
-	err=`tesseract "$i" "$t/$b" -l $lang -psm 6 2>&1`
+	err=`tesseract "$i" "$t/$b" -l $lang 2>&1`
 	test $? -ne 0 && continue
 
 	acc=`ocrevalutf8 wordacc "$imgdir/$b.txt" "$t/$b.txt" \
