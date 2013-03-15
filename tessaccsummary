@@ -1,0 +1,55 @@
+#!/bin/sh
+# Copyright 2013 Nick White <nick.white@durham.ac.uk>
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+
+usage="$0 [-w] imgdir traineddata
+
+  -w           test word accuracy, rather than character accuracy
+  imgdir       directory containing .png images with accompanying
+               .txt text files
+  traineddata  .traineddata file"
+
+if test "$1" = "-w"; then
+	accprog=wordacc
+	shift
+else
+	accprog=accuracy
+fi
+test $# -ne 2 && echo "Usage: $usage" && exit 1
+imgdir="$1"
+training="$2"
+
+# Copy training to temporary directory and point Tesseract to it
+t=`mktemp -d`
+export TESSDATA_PREFIX="$t"
+mkdir "$t/tessdata"
+lang=`basename "$training" | awk -F . '{print $1}'`
+cp "$training" "$t/tessdata/$lang.traineddata"
+# tesseract seems to complain without a eng.traineddata file available
+ln -s "$t/tessdata/$lang.traineddata" "$t/tessdata/eng.traineddata"
+
+sum=0
+n=0
+for i in `find "$imgdir" -type f -name '*.png' | sort`; do
+	b=`basename "$i" .png`
+	printf "%s: " "$b"
+	err=`tesseract "$i" "$t/$b" -l $lang -psm 6 2>&1`
+	test $? -ne 0 && continue
+
+	acc=`ocrevalutf8 wordacc "$imgdir/$b.txt" "$t/$b.txt" \
+	     | awk '/Accuracy$/ {print $1; exit}' | sed 's/%//'`
+	n=`expr $n + 1`
+	sum=`echo $sum + $acc | bc -l`
+
+	printf "%.2f%%\n" "$acc"
+done
+
+if test $n -ne 0; then
+        avg=`echo $sum / $n | bc -l`
+        printf "average: %.2f%%\n" "$avg"
+fi
+
+rm -rf "$t"

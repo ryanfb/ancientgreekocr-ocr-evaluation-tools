@@ -33,3 +33,33 @@ or
 This is needed as the tools don't (yet) natively handle UTF-8, but
 they can handle strangely encoded UTF-16, which this wrapper script
 delivers.
+
+Testing Tesseract with a .traineddata file
+==========================================
+
+'tessaccsummary' is an included script to make testing the accuracy
+of a Tesseract training file simple and easy.
+
+The script expects a directory laid out as follows:
+
+  images/
+  images/firstimg.png
+  images/firstimg.txt
+  images/secondimg.png
+  images/secondimg.txt
+
+The .txt file should be a UTF-8 file of the correct text ("ground
+truth") for the .png file of the same name. The image and text
+files may be named anything.
+
+You can then run the script like so:
+
+  tessaccsummary images/ /path/to/lang.traineddata
+
+This runs Tesseract using the provided .traineddata file on each
+.png image in the image directory, and print the character 
+accuracy for each image.
+
+You can instead get the word accuracy for each image like this:
+
+  tessaccsummary -w images/ /path/to/lang.traineddata
