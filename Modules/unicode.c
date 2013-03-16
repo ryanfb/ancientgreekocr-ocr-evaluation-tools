@@ -37,7 +37,7 @@ int suspect_marker;
     Charvalue value;
     byte1 = getc(f);
     byte2 = getc(f);
-    if (byte1 == 0xFE && byte2 == 0xFF || byte1 == 0xFF && byte2 == 0xFE)
+    if ((byte1 == 0xFE && byte2 == 0xFF) || (byte1 == 0xFF && byte2 == 0xFE))
     {
 	MSB_first = (byte1 == 0xFE ? True : False);
 	byte1 = getc(f);

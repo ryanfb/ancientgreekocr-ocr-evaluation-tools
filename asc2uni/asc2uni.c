@@ -31,7 +31,7 @@ Text text;
 
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -41,5 +41,5 @@ char *argv[];
 	error("invalid arguments", Exit);
     read_text(&text, NULL, &textopt);
     write_unicode(&text, NULL);
-    terminate();
+    return 0;
 }

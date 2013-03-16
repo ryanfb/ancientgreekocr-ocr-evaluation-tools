@@ -73,7 +73,7 @@ char *filename;
 }
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -83,5 +83,5 @@ char *argv[];
     read_text(&text, argv[0], &textopt);
     read_accrpt(&accdata, argv[1]);
     write_report(argc == 3 ? argv[2] : NULL);
-    terminate();
+    return 0;
 }

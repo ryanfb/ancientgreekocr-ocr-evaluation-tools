@@ -76,7 +76,7 @@ void write_results()
 }
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -87,5 +87,5 @@ char *argv[];
     find_words(&wordlist, &text);
     read_wacrpt(&wacdata, argv[1]);
     write_results();
-    terminate();
+    return 0;
 }

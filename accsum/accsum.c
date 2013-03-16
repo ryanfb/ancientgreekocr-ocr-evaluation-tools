@@ -30,7 +30,7 @@ Accdata accdata;
 
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -41,5 +41,5 @@ char *argv[];
     for (i = 0; i < argc; i++)
 	read_accrpt(&accdata, argv[i]);
     write_accrpt(&accdata, NULL);
-    terminate();
+    return 0;
 }

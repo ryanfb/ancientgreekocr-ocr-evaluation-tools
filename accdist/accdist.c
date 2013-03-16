@@ -43,7 +43,7 @@ char *filename;
 }
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -52,5 +52,5 @@ char *argv[];
     for (i = 0; i < argc; i++)
 	process_file(argv[i]);
     write_dist(&dist, NULL);
-    terminate();
+    return 0;
 }

@@ -33,12 +33,12 @@ char *outputfilename, *sfraction, *wfraction;
 
 Option option[] =
 {
-    'D', NULL,            &debug,
-    'O', NULL,            &optimize,
-    'o', &outputfilename, NULL,
-    's', &sfraction,      NULL,
-    'w', &wfraction,      NULL,
-    '\0'
+    {'D', NULL,            &debug},
+    {'O', NULL,            &optimize},
+    {'o', &outputfilename, NULL},
+    {'s', &sfraction,      NULL},
+    {'w', &wfraction,      NULL},
+    {'\0'}
 };
 
 Textopt textopt = { True, True, 0, True, True };
@@ -118,11 +118,12 @@ char *argv[];
     if (wfraction &&
     !valid_fraction(wfraction, &suspect_weight, &unmarked_weight))
 	error_string("invalid weight", wfraction, Exit);
-    if (sfraction)
+    if (sfraction) {
 	if (valid_fraction(sfraction, &m, &n))
 	    suspect_threshold = actual_voters * unmarked_weight * m / n;
 	else
 	    error_string("invalid threshold", sfraction, Exit);
+    }
 }
 /**********************************************************************/
 
@@ -306,7 +307,7 @@ Synclist *synclist;
 }
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -317,5 +318,5 @@ char *argv[];
     synchronize(&synclist, actual_voters, input);
     perform_vote(&synclist);
     write_text(&output, outputfilename, NULL);
-    terminate();
+    return 0;
 }

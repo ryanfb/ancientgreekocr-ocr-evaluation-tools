@@ -22,6 +22,7 @@
  *
  **********************************************************************/
 
+#include <stdlib.h>
 #include "sort.h"
 #include "wacrpt.h"
 
@@ -94,11 +95,12 @@ Wac wac[];
 	while (read_two(f, &count, &missed))
 	{
 	    index = atoi(&line[OFFSET]);
-	    if (index == 0)
+	    if (index == 0) {
 		if (strcmp(&line[OFFSET], TOTAL) == 0)
 		    total_count = count;
 		else /* excess */
 		    index = MAX_OCCURRENCES + 1;
+	    }
 	    increment_wac(&wac[index], count, missed);
 	}
     return(total_count);

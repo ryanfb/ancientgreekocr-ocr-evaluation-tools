@@ -32,11 +32,11 @@ Boolean heuristic, show_suspect, transpose;
 
 Option option[] =
 {
-    'H', NULL, &heuristic,
-    'i', NULL, &textopt.case_insensitive,
-    's', NULL, &show_suspect,
-    'T', NULL, &transpose,
-    '\0'
+    {'H', NULL, &heuristic},
+    {'i', NULL, &textopt.case_insensitive},
+    {'s', NULL, &show_suspect},
+    {'T', NULL, &transpose},
+    {'\0'}
 };
 
 /**********************************************************************/
@@ -144,7 +144,7 @@ char *filename[];
 }
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -152,7 +152,7 @@ char *argv[];
     int i;
     Synclist synclist1, synclist2;
     initialize(&argc, argv, usage, option);
-    if (argc < 2 || transpose && argc > 2)
+    if (argc < 2 || (transpose && argc > 2))
 	error("invalid number of text files", Exit);
     text = NEW_ARRAY(argc, Text);
     for (i = 0; i < argc; i++)
@@ -173,5 +173,5 @@ char *argv[];
 	write_differences(&synclist1, argc, text, argv);
     }
     write_separator();
-    terminate();
+    return 0;
 }

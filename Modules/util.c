@@ -44,8 +44,6 @@ void (*cleanup_routine)();
 
 int errstatus = 1;
 
-static short tempfile_id;
-
 /**********************************************************************/
 
 void *allocate(number, size)
@@ -84,6 +82,7 @@ char *filename, *mode;
 	error_string("unable to create file", filename, Exit);
     else
 	error_string("unable to open file", filename, Exit);
+    return NULL;
 }
 /**********************************************************************/
 
@@ -100,41 +99,6 @@ char *filename;
 {
     struct stat buffer;
     return(stat(filename, &buffer) == 0 ? True : False);
-}
-/**********************************************************************/
-
-static char *create_tempfilename(id)
-short id;
-{
-    char name[100];
-#ifdef unix
-    sprintf(name, "/tmp/.%s%d-%d", exec_name, getpid(), id);
-#else
-    sprintf(name, "c:\\temp\\tempfile.%d", id);
-#endif
-    return(strdup(name));
-}
-/**********************************************************************/
-
-char *tempfilename()
-{
-    char *name;
-    name = create_tempfilename(++tempfile_id);
-    unlink(name);
-    return(name);
-}
-/**********************************************************************/
-
-static void delete_tempfiles()
-{
-    short i;
-    char *name;
-    for (i = 1; i <= tempfile_id; i++)
-    {
-	name = create_tempfilename(i);
-	unlink(name);
-	free(name);
-    }
 }
 /**********************************************************************/
 
@@ -177,7 +141,7 @@ char *usage;
 	(*usage_routine)();
     else
 	fprintf(stderr, "Usage:  %s %s\n", exec_name, usage);
-    terminate();
+    exit(0);
 }
 /**********************************************************************/
 
@@ -209,6 +173,7 @@ invalid_option:
     error_string("invalid option", arg, Exit);
 duplicate_option:
     error_string("duplicate option", arg, Exit);
+    return(False);
 }
 /**********************************************************************/
 
@@ -251,14 +216,7 @@ int status;
 {
     if (cleanup_routine)
 	(*cleanup_routine)();
-    delete_tempfiles();
     exit(status);
-}
-/**********************************************************************/
-
-void terminate()
-{
-    quit(0);
 }
 /**********************************************************************/
 

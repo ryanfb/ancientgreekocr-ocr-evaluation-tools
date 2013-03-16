@@ -57,7 +57,7 @@ void write_results()
 }
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -68,5 +68,5 @@ char *argv[];
     for (i = 0; i < argc; i++)
 	process_file(argv[i]);
     write_results();
-    terminate();
+    return 0;
 }

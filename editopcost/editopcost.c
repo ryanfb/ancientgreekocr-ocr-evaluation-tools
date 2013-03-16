@@ -56,7 +56,7 @@ void write_results()
 }
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -70,5 +70,5 @@ char *argv[];
 	decrement_edodata();
     }
     write_results();
-    terminate();
+    return 0;
 }

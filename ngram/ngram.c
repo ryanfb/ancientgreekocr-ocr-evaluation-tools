@@ -34,8 +34,8 @@ char *nstring;
 
 Option option[] =
 {
-    'n', &nstring, NULL,
-    '\0'
+    {'n', &nstring, NULL},
+    {'\0'}
 };
 
 Textopt textopt = { True, True, 0, True, True };
@@ -61,6 +61,7 @@ short get_n()
     if (nstring[0] >= '1' && nstring[0] <= '0' + MAX_N && !nstring[1])
 	return(nstring[0] - '0');
     error_string("invalid value", nstring, Exit);
+    return 0;
 }
 /**********************************************************************/
 
@@ -164,7 +165,7 @@ void write_report()
 }
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -176,5 +177,5 @@ char *argv[];
     for (i = 0; i < argc; i++)
 	process_file(argv[i]);
     write_report();
-    terminate();
+    return 0;
 }

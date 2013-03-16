@@ -31,7 +31,7 @@ Edodata edodata;
 
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -42,5 +42,5 @@ char *argv[];
     for (i = 0; i < argc; i++)
 	read_edorpt(&edodata, argv[i]);
     write_edorpt(&edodata, NULL);
-    terminate();
+    return 0;
 }

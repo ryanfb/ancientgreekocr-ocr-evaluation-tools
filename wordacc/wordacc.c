@@ -31,8 +31,8 @@ char *stopwordfilename;
 
 Option option[] =
 {
-    'S', &stopwordfilename, NULL,
-    '\0'
+    {'S', &stopwordfilename, NULL},
+    {'\0'}
 };
 
 Textopt textopt = { True, True, 0, True, True, True };
@@ -261,7 +261,7 @@ void determine_wacdata()
 }
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -274,5 +274,5 @@ char *argv[];
     obtain_matches();
     determine_wacdata();
     write_wacrpt(&wacdata, (argc == 3 ? argv[2] : NULL));
-    terminate();
+    return 0;
 }

@@ -31,8 +31,8 @@ Boolean debug;
 
 Option option[] =
 {
-    'D', NULL, &debug,
-    '\0'
+    {'D', NULL, &debug},
+    {'\0'}
 };
 
 Textopt textopt = { True, True, 0, True, True };
@@ -170,8 +170,9 @@ Candidate candidate[];
 	    reduction++;
 	if (candidate[i].for_deletion)
 	    reduction++;
-	if (reduction > move_reduction || reduction == move_reduction &&
-	candidate[i].sync->substr->length < move_length)
+	if (reduction > move_reduction ||
+	    (reduction == move_reduction &&
+	     candidate[i].sync->substr->length < move_length))
 	{
 	    move_i = i;
 	    move_length = candidate[i].sync->substr->length;
@@ -224,7 +225,7 @@ Synclist *synclist;
 }
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -241,5 +242,5 @@ char *argv[];
     count_deletions(&synclist2);
     count_moves(&synclist2);
     write_edorpt(&edodata, (argc == 3 ? argv[2] : NULL));
-    terminate();
+    return 0;
 }

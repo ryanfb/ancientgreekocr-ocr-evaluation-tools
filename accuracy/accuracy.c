@@ -129,7 +129,7 @@ Synclist *synclist;
 }
 /**********************************************************************/
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -144,5 +144,5 @@ char *argv[];
     fastukk_sync(&synclist, text);
     process_synclist(&synclist);
     write_accrpt(&accdata, (argc == 3 ? argv[2] : NULL));
-    terminate();
+    return 0;
 }

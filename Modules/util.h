@@ -67,9 +67,6 @@ void close_file(/* FILE *f */);
 Boolean file_exists(/* char *filename */);
 			/* returns True if the named file exists */
 
-char *tempfilename();	/* creates and returns a unique name for a temporary
-			   file */
-
 char *basefilename(/* char *pathname */);
 			/* given a pathname, returns the base filename; e.g.,
 			   basefilename("/local/isri/bin/ocr") returns "ocr" */
@@ -113,8 +110,6 @@ void initialize(/* int *argc, char *argv[], char *usage, Option option[] */);
 			   appropriate; "usage" may be NULL if "usage_routine"
 			   has been set; "option" may be NULL if there are no
 			   options */
-
-void terminate();	/* terminates the program with exit status 0 */
 
 extern FILE *errfile;   /* file that errors are written to; stderr by default */
 

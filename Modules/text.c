@@ -108,9 +108,9 @@ Char *start;
 	if (start->value == '<' && !(value = 0) &&
 	(c = start->next) && is_hex(c, &value) &&
 	(c = c->next) && is_hex(c, &value) &&
-	(c = c->next) && (c->value == '>' || is_hex(c, &value) &&
+	(c = c->next) && (c->value == '>' || (is_hex(c, &value) &&
 	(c = c->next) && is_hex(c, &value) &&
-	(c = c->next) && c->value == '>'))
+	(c = c->next) && c->value == '>')))
 	{
 	    start->value = value;
 	    while (c != start)
@@ -133,16 +133,16 @@ Char *start;
     Boolean found_non_blank = False;
     Char *c, *next;
     for (c = start; c; c = c->next)
-	if (c->value <= '\r' && (c->value >= '\v' || c->value == '\t') ||
-	c->value == 0xA0)
+	if (c->value <= '\r' && ((c->value >= '\v' || c->value == '\t') ||
+	c->value == 0xA0))
 	    c->value = BLANK;
     c = start;
     while (c)
     {
 	next = c->next;
-	if (c->value == BLANK && (!found_non_blank || !next ||
+	if (c->value == BLANK && ((!found_non_blank || !next ||
 	next->value == BLANK || next->value == NEWLINE) ||
-	c->value == NEWLINE && !found_non_blank)
+	(c->value == NEWLINE && !found_non_blank)))
 	{
 	    if (found_non_blank && next && next->value == BLANK)
 		next->suspect |= c->suspect;
@@ -161,8 +161,8 @@ Char *start;
 {
     Char *c;
     for (c = start; c; c = c->next)
-	if (c->value >= 'A' && c->value <= 'Z' ||
-	c->value >= 0xC0 && c->value <= 0xDE && c->value != 0xD7)
+	if ((c->value >= 'A' && c->value <= 'Z') ||
+	(c->value >= 0xC0 && c->value <= 0xDE && c->value != 0xD7))
 	    c->value += 32;
 }
 /**********************************************************************/
@@ -203,8 +203,8 @@ Boolean fake_newline;
 	string[i++] = SUSPECT_MARKER;
     if (value == NEWLINE)
 	sprintf(&string[i], (fake_newline ? "<\\n>" : "\n"));
-    else if (value >= BLANK && value <= REJECT_CHARACTER ||
-    value > 0xA0 && value <= 0xFF)
+    else if ((value >= BLANK && value <= REJECT_CHARACTER) ||
+    (value > 0xA0 && value <= 0xFF))
 	sprintf(&string[i], "%c", value);
     else if (value < 256)
 	sprintf(&string[i], "<%02X>", value);
