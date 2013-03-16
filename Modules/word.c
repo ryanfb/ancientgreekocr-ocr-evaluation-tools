@@ -47,8 +47,8 @@ void find_words(wordlist, text)
 Wordlist *wordlist;
 Text *text;
 {
-    unsigned char string[MAX_WORDLENGTH + 1];
-    unsigned char s[7];
+    char string[MAX_WORDLENGTH + 1];
+    char s[7];
     long len = 0, i, l;
     Charvalue value;
     Word *word;

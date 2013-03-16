@@ -32,7 +32,7 @@
 #define TOTAL    " Total\n"
 #define OFFSET   29
 
-static unsigned char line[100];
+static char line[100];
 
 /**********************************************************************/
 

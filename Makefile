@@ -1,7 +1,7 @@
 # Configuration
 #CC = gcc
 LD = $(CC)
-CFLAGS = -IModules
+CFLAGS = -IModules -Wall -pedantic
 LDFLAGS = -lm # only actually needed by accci and wordaccci
 PREFIX = /usr/local
 MANPREFIX = $(PREFIX)/share/man

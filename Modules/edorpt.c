@@ -28,7 +28,7 @@
 #define TITLE    "UNLV-ISRI Edit Operation Report Version 5.1\n"
 #define DIVIDER  "-------------------------------------------\n"
 
-static unsigned char line[100];
+static char line[100];
 
 /**********************************************************************/
 

@@ -31,7 +31,7 @@
 #define CLASS_OFFSET  29
 #define CONF_OFFSET   20
 
-static unsigned char line[100];
+static char line[100];
 
 /**********************************************************************/
 
@@ -159,7 +159,7 @@ char *filename;
 		else if (line[CLASS_OFFSET + 2] == '\\')
 		    value3 = NEWLINE;
 		else
-		    sscanf(&line[CLASS_OFFSET + 2], "%lx", &value3);
+		    sscanf(&line[CLASS_OFFSET + 2], "%lx", (unsigned long int *) &value3);
 		add_class(accdata, value3, value1, value2);
 	    }
     }
