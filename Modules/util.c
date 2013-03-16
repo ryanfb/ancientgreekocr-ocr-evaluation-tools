@@ -116,24 +116,6 @@ char *pathname;
 }
 /**********************************************************************/
 
-static void handle_interrupt(signal)
-int signal;
-{
-    static Boolean handling_interrupt = False;
-    if (handling_interrupt)
-	return;
-    handling_interrupt = True;
-    error("process killed", Exit);
-}
-/**********************************************************************/
-
-static void trap_interrupts()
-{
-    signal(SIGINT, handle_interrupt);
-    signal(SIGTERM, handle_interrupt);
-}
-/**********************************************************************/
-
 static void show_usage(usage)
 char *usage;
 {
@@ -206,7 +188,6 @@ char *argv[], *usage;
 Option option[];
 {
     exec_name = basefilename(argv[0]);
-    trap_interrupts();
     parse_args(argc, argv, usage, option);
 }
 /**********************************************************************/
