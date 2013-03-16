@@ -159,7 +159,7 @@ char *filename;
 		else if (line[CLASS_OFFSET + 2] == '\\')
 		    value3 = NEWLINE;
 		else
-		    sscanf(&line[CLASS_OFFSET + 2], "%x", &value3);
+		    sscanf(&line[CLASS_OFFSET + 2], "%lx", &value3);
 		add_class(accdata, value3, value1, value2);
 	    }
     }
