@@ -39,7 +39,7 @@ for i in `find "$imgdir" -type f -name '*.png' | sort`; do
 	err=`tesseract "$i" "$t/$b" -l $lang 2>&1`
 	test $? -ne 0 && continue
 
-	acc=`ocrevalutf8 wordacc "$imgdir/$b.txt" "$t/$b.txt" \
+	acc=`ocrevalutf8 $accprog "$imgdir/$b.txt" "$t/$b.txt" \
 	     | awk '/Accuracy$/ {print $1; exit}' | sed 's/%//'`
 	n=`expr $n + 1`
 	sum=`echo $sum + $acc | bc -l`
