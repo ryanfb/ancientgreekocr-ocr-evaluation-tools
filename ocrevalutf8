@@ -15,6 +15,6 @@ t=`mktemp -d`
 iconv -f utf8 -t utf16 < "$ground" | uni2asc > "$t/ground"
 iconv -f utf8 -t utf16 < "$ocr" | uni2asc > "$t/ocr"
 
-"$1" "$t/ground" "$t/ocr" | asc2uni | iconv -f utf16 -t utf8
+"$1" "$t/ground" "$t/ocr" | asc2uni | iconv -f UTF-16 -t UTF-8
 
 rm -r "$t"
