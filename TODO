@@ -1,0 +1,1 @@
+Remove (or split off under different tools / a flag) the ^ & ~ functionality that was used to detect uncertain characters (or something like that) - see special UNVL output mode in tesseract code for details. Here it just adds complexity and reduces accuracy.
