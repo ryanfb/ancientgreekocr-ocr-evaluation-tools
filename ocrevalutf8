@@ -12,6 +12,13 @@ ocr="$3"
 
 t=`mktemp -d`
 
+for i in "$2" "$3"; do
+	if ! test -f "$i"; then
+		echo "Error: can't find $i" >&2
+		exit 1
+	fi
+done
+
 iconv -f utf8 -t utf16 < "$ground" | uni2asc > "$t/ground"
 iconv -f utf8 -t utf16 < "$ocr" | uni2asc > "$t/ocr"
 
