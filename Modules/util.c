@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <signal.h>
 
-#ifdef unix
+#if defined unix || defined __APPLE__
 #include <sys/types.h>
 #include <sys/stat.h>
 #else
