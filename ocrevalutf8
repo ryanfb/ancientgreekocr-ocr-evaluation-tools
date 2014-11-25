@@ -10,7 +10,7 @@ tool="$1"
 ground="$2"
 ocr="$3"
 
-t=`mktemp -d`
+t=`gmktemp -d`
 
 for i in "$2" "$3"; do
 	if ! test -f "$i"; then
@@ -19,9 +19,9 @@ for i in "$2" "$3"; do
 	fi
 done
 
-iconv -f utf8 -t utf16 < "$ground" | uni2asc > "$t/ground"
-iconv -f utf8 -t utf16 < "$ocr" | uni2asc > "$t/ocr"
+iconv -f UTF-8 -t UTF-16 < "$ground" | ./uni2asc/uni2asc > "$t/ground"
+iconv -f UTF-8 -t UTF-16 < "$ocr" | ./uni2asc/uni2asc > "$t/ocr"
 
-"$1" "$t/ground" "$t/ocr" | asc2uni | iconv -f UTF-16 -t UTF-8
+"$1" "$t/ground" "$t/ocr" | ./asc2uni/asc2uni | iconv -f UTF-16 -t UTF-8
 
 rm -r "$t"

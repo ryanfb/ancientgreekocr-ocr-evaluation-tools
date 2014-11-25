@@ -13,17 +13,17 @@ usage="$0 [-w] imgdir traineddata
   traineddata  .traineddata file"
 
 if test "$1" = "-w"; then
-	accprog=wordacc
+	accprog=./wordacc/wordacc
 	shift
 else
-	accprog=accuracy
+	accprog=./accuracy/accuracy
 fi
 test $# -ne 2 && echo "Usage: $usage" && exit 1
 imgdir="$1"
 training="$2"
 
 # Copy training to temporary directory and point Tesseract to it
-t=`mktemp -d`
+t=`gmktemp -d`
 export TESSDATA_PREFIX="$t"
 mkdir "$t/tessdata"
 lang=`basename "$training" | awk -F . '{print $1}'`
@@ -39,7 +39,7 @@ for i in `find "$imgdir" -type f -name '*.png' | sort`; do
 	err=`tesseract "$i" "$t/$b" -l $lang 2>&1`
 	test $? -ne 0 && continue
 
-	acc=`ocrevalutf8 $accprog "$imgdir/$b.txt" "$t/$b.txt" \
+	acc=`./ocrevalutf8 $accprog "$imgdir/$b.txt" "$t/$b.txt" \
 	     | awk '/Accuracy$/ {print $1; exit}' | sed 's/%//'`
 	n=`expr $n + 1`
 	sum=`echo $sum + $acc | bc -l`
