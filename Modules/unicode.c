@@ -74,7 +74,7 @@ Unicodeopt *unicodeopt;
 {
     Char *last;
     FILE *f;
-#ifndef unix
+#if !(defined unix || defined __APPLE__)
     if (!filename)
 	error_string("invalid call to", "read_unicode", Exit);
 #endif
@@ -97,7 +97,7 @@ char *filename;
     unsigned short byte_order = 0xFEFF, suspect_marker = SUSPECT_MARKER;
     FILE *f;
     Char *c;
-#ifndef unix
+#if !(defined unix || defined __APPLE__)
     if (!filename)
 	error_string("invalid call to", "write_unicode", Exit);
 #endif

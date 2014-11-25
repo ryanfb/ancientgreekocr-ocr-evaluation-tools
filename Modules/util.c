@@ -105,7 +105,7 @@ char *filename;
 char *basefilename(pathname)
 char *pathname;
 {
-#ifdef unix
+#if defined unix || defined __APPLE__
     char delimiter = '/';
 #else
     char delimiter = '\\';
