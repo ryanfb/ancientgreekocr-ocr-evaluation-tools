@@ -1,0 +1,22 @@
+# Ignore generated files.
+*.a
+*.o
+accci/accci
+accdist/accdist
+accsum/accsum
+accuracy/accuracy
+asc2uni/asc2uni
+editop/editop
+editopcost/editopcost
+editopsum/editopsum
+groupacc/groupacc
+ngram/ngram
+nonstopacc/nonstopacc
+synctext/synctext
+uni2asc/uni2asc
+vote/vote
+wordacc/wordacc
+wordaccci/wordaccci
+wordaccdist/wordaccdist
+wordaccsum/wordaccsum
+wordfreq/wordfreq
